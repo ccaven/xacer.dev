@@ -6,4 +6,4 @@ function loadImage (pathToImage, imgId) {
     });
 }
 
-loadImage("../imgs/calvin-suprised.png", "target-img");
+loadImage("../img/calvin-suprised.png", "target-img");
