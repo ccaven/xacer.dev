@@ -1,4 +1,4 @@
-catchImage("calvin-surprised.png");
+catchImage("./js/calvin-surprised.png");
 
 async function catchImage (pathToImage, imgId) {
     console.log("Catching image: " + pathToImage);
