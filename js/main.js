@@ -1,9 +1,11 @@
-function loadImage (pathToImage, imgId) {
-    fetch(pathToImage).then(response => {
-        return response.blob();
-    }).then(blob => {
-        document.getElementById(imgId).src = URL.createObjectURL(blob);
-    });
-}
+catchImage("calvin-surprised.png");
 
-loadImage("../img/calvin-suprised.png", "target-img");
+async function catchImage (pathToImage, imgId) {
+    console.log("Catching image: " + pathToImage);
+    const response = await fetch(pathToImage);
+    console.log("Response: " + response);
+    const blob = await response.blob();
+    console.log("Blob: " + blob);
+    document.getElementById(imgId).src = URL.createObjectURL(blob);
+    console.log("Finished operation");
+}
