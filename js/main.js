@@ -1,4 +1,6 @@
-catchImage("/img/calvin-surprised.png", "target-img");
+///catchImage("/img/calvin-surprised.png", "target-img");
+
+catchCSV("/csv/test.csv");
 
 async function catchImage (pathToImage, imgId) {
     console.log("Catching image: " + pathToImage);
@@ -12,7 +14,7 @@ async function catchImage (pathToImage, imgId) {
 
 
 async function catchCSV (pathToCSV) {
-    const response = await fetch("/csv/test.csv");
+    const response = await fetch(pathToCSV);
     const data = await response.text();
     console.log(data);
 }
