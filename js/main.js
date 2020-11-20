@@ -12,9 +12,17 @@ async function catchImage (pathToImage, imgId) {
     console.log("Finished operation");
 }
 
+function getTableFromText (textData) {
+    let rows = textData.split("\n");
+    for (let i = 0; i < rows.length; i ++) {
+        rows[i] = rows[i].split(",");
+    }
+    return rows;
+}
 
 async function catchCSV (pathToCSV) {
     const response = await fetch(pathToCSV);
     const data = await response.text();
-    console.log(data);
+    const table = getTableFromText(data);
+    return table;
 }

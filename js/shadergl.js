@@ -45,7 +45,7 @@ var XGL;
             failIfMajorPerformanceCaveat: true
         });
 
-        var vsSource = "attribute vec2 a_position;void main() { gl_Position = vec4(a_position.xy, 0.0, 1.0); }";
+        var vsSource = "attribute vec2 aPosition;void main() { gl_Position = vec4(aPosition.xy, 0.0, 1.0); }";
 
         var vertexShader = bgl.createShader(bgl.VERTEX_SHADER);
 		bgl.shaderSource(vertexShader, vsSource);
@@ -67,7 +67,7 @@ var XGL;
 		bgl.bufferData(bgl.ARRAY_BUFFER, 
 			new Float32Array([-1, -1, +1, -1, -1, +1, -1, +1, +1, -1, +1, +1]),
 			bgl.STATIC_DRAW);
-		var positionLocation = bgl.getAttribLocation(bprogram, "a_position");
+		var positionLocation = bgl.getAttribLocation(bprogram, "aPosition");
 		bgl.enableVertexAttribArray(positionLocation);
 		bgl.vertexAttribPointer(positionLocation, 2, bgl.FLOAT, false, 0, 0);
 		
@@ -87,7 +87,7 @@ var XGL;
     }
 	
 	var Shader = function(fsSource) {
-		this.vsSource = "attribute vec2 a_position;void main() { gl_Position = vec4(a_position.xy, 0.0, 1.0); }";
+		this.vsSource = "attribute vec2 a_position;void main() { gl_Position = vec4(aPosition.xy, 0.0, 1.0); }";
 		this.fsSource = fsSource;
 		this.vertexShader = loadShader(gl.VERTEX_SHADER, this.vsSource);
 		this.fragmentShader = loadShader(gl.FRAGMENT_SHADER, this.fsSource);
@@ -133,7 +133,7 @@ var XGL;
 		var triBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, triBuffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, +1, -1, -1, +1, -1, +1, +1, -1, +1, +1]), gl.STATIC_DRAW);
-		var positionLocation = gl.getAttribLocation(this.program, "a_position");
+		var positionLocation = gl.getAttribLocation(this.program, "aPosition");
 		gl.enableVertexAttribArray(positionLocation);
 		gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 		gl.useProgram(this.program);
