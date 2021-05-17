@@ -10,6 +10,50 @@
     <div class="header">
         <h1>Welcome to <span>xacer.dev</span></h1>
     </div>
+
+    <section class="scroll-section" id="my-projects">
+        <h2 class="section-header">My Projects</h2>
+        <!-- Sideways slideshow here -->
+        <div class="sideways-slideshow" id="projects-slideshow">
+            <div class="slide fade s0">
+                <div class="numbertext">1 / 3</div>
+                <img src="img/city-skyline.jpg" style="width:100%" alt="marching cubes thumbnail">
+                <div class="slideshow-text">Marching Cubes Project</div>
+            </div>
+            <div class="slide fade s0">
+                <div class="numbertext">2 / 3</div>
+                <img src="img/city-skyline.jpg" style="width:100%" alt="marching cubes thumbnail">
+                <div class="slideshow-text">don't fall</div>
+            </div>
+            <div class="slide fade s0">
+                <div class="numbertext">3 / 3</div>
+                <img src="img/city-skyline.jpg" style="width:100%" alt="marching cubes thumbnail">
+                <div class="slideshow-text">unity game</div>
+            </div>
+
+            <a class="slideshow-prev" onclick="Slideshow.plusSlides(0, -1)">&#10094;</a>
+            <a class="slideshow-next" onclick="Slideshow.plusSlides(0, 1)">&#10095;</a>
+        </div>
+        <div style="text-align: center;">
+            <span class="slideshow-dot s0" onclick="Slideshow.currentSlide(0, 0)"></span>
+            <span class="slideshow-dot s0" onclick="Slideshow.currentSlide(0, 1)"></span>
+            <span class="slideshow-dot s0" onclick="Slideshow.currentSlide(0, 2)"></span>
+        </div>
+    </section>
+
+    <section class="scroll-section" id="resources">
+        <h2 class="section-header">Resources</h2>
+        <!-- sideways sideshow here -->
+        <div class="sideways-slideshow" id="resources-slideshow">
+            Insert slideshow here
+        </div>
+    </section>
+
+    <section class="scroll-section" id="resources">
+        <h2 class="section-header">Contact</h2>
+        <p>Insert junk email here</p>
+    </section>
+
     <script src="./js/main.js"></script>
 </body>
 </html>
