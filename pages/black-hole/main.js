@@ -21,6 +21,8 @@ import { StandardMesh } from
 import { DisplayContext, Renderer } from
 	"https://cdn.jsdelivr.net/gh/ccaven/xacer3d/src/xgl.js";
 
+(async () => {
+
 // Initialize display context
 const displayContext = new DisplayContext({
 	preserveDrawingBuffer: true,
@@ -329,3 +331,5 @@ function render(now) {
 
 // Call the first animation frame
 requestAnimationFrame(render);
+
+}) ();
