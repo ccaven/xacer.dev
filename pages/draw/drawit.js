@@ -64,6 +64,25 @@ function gaussianBlur (data, width, height, factor) {
         }
     }
 
+    // for (let x = 0; x < gaussianSize; x ++) {
+    //     for (let y = 0; y < gaussianSize; y ++) {
+    //         gaussianMatrix[x + y * gaussianSize] /= total;
+    //     }
+    // }
+
+    // Write each line of the shader
+    for (let x = 0; x < gaussianSize; x ++) {
+        for (let y = 0; y < gaussianSize; y ++) {
+            let coef = gaussianMatrix[x + y * gaussianSize];
+
+            let diff = `float2(${(x - 9) / 9}, ${(y - 9) / 9}) / resolution`;
+
+            console.log(`value += tex2D(_MainTex, i.uv + ${diff}) * ${coef};`);
+        }
+    }
+
+    console.log(total);
+
     // Apply Gaussian matrix
     const newData = new Uint8Array(width * height);
     for (let x = 0; x < width; x ++) {
@@ -76,13 +95,15 @@ function gaussianBlur (data, width, height, factor) {
                     let iy = y + gy - factor;
                     ix = Math.min(Math.max(ix, 0), width - 1);
                     iy = Math.min(Math.max(iy, 0), height - 1);
-                    value += data[ix + iy * width] / 255 * gaussianCoefficient;
+                    value += data[ix + iy * width] * gaussianCoefficient;
                 }
             }
-            newData[x + y * width] = value / total * 255;
+
+            value = Math.max(Math.min(value, 255), 0);
+
+            newData[x + y * width] = value;
         }
     }
-
     return newData;
 }
 
@@ -92,25 +113,26 @@ function gaussianBlur (data, width, height, factor) {
  * @returns {ImageData}
  */
 function getPencilDrawing (originalData) {
-
-
     const width = originalData.width;
     const height = originalData.height;
 
     // Turn image into grayscale
-
     const grayscaleData = new Uint8Array(width * height);
     for (let x = 0; x < width; x ++) {
         for (let y = 0; y < height; y ++) {
             let l = x + y * width << 2;
             let g = Math.hypot(originalData.data[l], originalData.data[l + 1], originalData.data[l + 2]);
             g /= 441.672956;
-            grayscaleData[x + y * width] = 255 - g * 255;
+            g = Math.max(Math.min(g, 1), 0);
+            g *= 16;
+            g = Math.floor(g);
+            g *= 16;
+            grayscaleData[x + y * width] = 255 - g;
         }
     }
 
     // Blur grayscale image
-    const blurredGrayscale = gaussianBlur(grayscaleData, width, height, 30);
+    const blurredGrayscale = gaussianBlur(grayscaleData, width, height, 9);
 
     // Put them together
     for (let x = 0; x < width; x ++) {
@@ -123,13 +145,12 @@ function getPencilDrawing (originalData) {
             front = Math.min(Math.max(front, 0), 255);
             back = Math.min(Math.max(back, 0), 255);
 
-            let result = front / (back) * 255;
+            let result = front / back * 255;
+
+            if (back == 0) result = 255;
 
             if (result > 255) { result = 255; }
             if (result < 0) { result = 0; }
-
-            // result *= 0.5;
-            // result += 0.5 * (255 - grayscaleData[x + y * width]);
 
             originalData.data[l] = result;
             originalData.data[l+1] = result;
@@ -137,20 +158,14 @@ function getPencilDrawing (originalData) {
         }
     }
 
-
     return originalData;
 }
 
 function run () {
-
     console.log("Running operation");
-
     if (inputTag.files.length) {
-
         let reader = new FileReader();
-
         reader.onload = e => {
-
             const dataUrl = e.target.result;
             imgElement.setAttribute("src", dataUrl);
 
@@ -166,12 +181,7 @@ function run () {
             ctx.putImageData(updatedData, 0, 0);
 
             console.log(originalData);
-
-
         };
-
         reader.readAsDataURL(inputTag.files[0]);
-
     }
-
 }
