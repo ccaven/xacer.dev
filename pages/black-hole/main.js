@@ -108,7 +108,7 @@ function initializeDiskCanvas () {
 			height: 20,
 			color: l(Math.random())
 		};
-		diskRects[i].speed = 10 * (1 - (diskRects[i].y - 0.2) / diskCanvas.height);
+		diskRects[i].speed = 30 * (1 - (diskRects[i].y - 0.2) / diskCanvas.height);
 	}
 
 	//document.body.prepend(diskCanvas);
