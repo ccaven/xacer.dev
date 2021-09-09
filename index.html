@@ -4,56 +4,48 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>xacer.dev</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>Welcome to <span>xacer.dev</span></h1>
-    </div>
+    <!-- WebGL canvas background -->
+    <canvas id="webgl-output"></canvas>
 
-    <section class="scroll-section" id="my-projects">
-        <h2 class="section-header">My Projects</h2>
-        <!-- Sideways slideshow here -->
-        <div class="sideways-slideshow" id="projects-slideshow">
-            <div class="slide fade s0">
-                <div class="numbertext">1 / 3</div>
-                <img src="img/city-skyline.jpg" style="width:100%" alt="marching cubes thumbnail">
-                <div class="slideshow-text">Marching Cubes Project</div>
-            </div>
-            <div class="slide fade s0">
-                <div class="numbertext">2 / 3</div>
-                <img src="img/city-skyline.jpg" style="width:100%" alt="marching cubes thumbnail">
-                <div class="slideshow-text">don't fall</div>
-            </div>
-            <div class="slide fade s0">
-                <div class="numbertext">3 / 3</div>
-                <img src="img/city-skyline.jpg" style="width:100%" alt="marching cubes thumbnail">
-                <div class="slideshow-text">unity game</div>
-            </div>
+    <!-- Main page content -->
+    <main>
 
-            <a class="slideshow-prev" onclick="Slideshow.plusSlides(0, -1)">&#10094;</a>
-            <a class="slideshow-next" onclick="Slideshow.plusSlides(0, 1)">&#10095;</a>
-        </div>
-        <div style="text-align: center;">
-            <span class="slideshow-dot s0" onclick="Slideshow.currentSlide(0, 0)"></span>
-            <span class="slideshow-dot s0" onclick="Slideshow.currentSlide(0, 1)"></span>
-            <span class="slideshow-dot s0" onclick="Slideshow.currentSlide(0, 2)"></span>
-        </div>
-    </section>
+        <section class="left">
+            <h1>xacer.dev</h1>
+            <p>All about xacer</p>
+        </section>
 
-    <section class="scroll-section" id="resources">
-        <h2 class="section-header">Resources</h2>
-        <!-- sideways sideshow here -->
-        <div class="sideways-slideshow" id="resources-slideshow">
-            Insert slideshow here
-        </div>
-    </section>
+        <blockquote class="left">Some quote here</blockquote>
 
-    <section class="scroll-section" id="resources">
-        <h2 class="section-header">Contact</h2>
-        <p>Insert junk email here</p>
-    </section>
+        <section class="right">
+            <h2>About me</h2>
+            <p>Mathematician, programmer, and game developer who goes by the name xacer.</p>
+        </section>
 
-    <script src="./js/main.js"></script>
+        <blockquote class="left">Some quote here</blockquote>
+
+        <section class="left">
+            <h2>Experience</h2>
+            <p>I have experience with Node.js, Unity/C#, and recently, discord bots.</p>
+        </section>
+
+        <blockquote class="right">Some quote here</blockquote>
+
+        <section class="left">
+            <h2>My Projects</h2>
+            <ul>
+                <li>Unity games</li>
+                <li>Discord bot</li>
+                <li>Khan Academy projects</li>
+                <li>WebGL creations</li>
+                <li>WebGL library</li>
+            </ul>
+        </section>
+
+        <script src="./main.js"></script>
+    </main>
 </body>
 </html>

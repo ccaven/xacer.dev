@@ -1,0 +1,72 @@
+
+/* Variables */
+:root {
+    --dark-bg: #363636;
+    --spacing: 100px;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+canvas {
+    background-color: #000000;
+
+    width: 100vw;
+    height: 100vh;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+}
+
+main {
+    width: 100vw;
+
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+
+    color: white;
+
+    z-index: 99;
+    position: absolute;
+
+    margin: 128px auto;
+    padding: 120px 0px;
+}
+
+/* Quote formatting */
+blockquote {
+    margin: 0;
+    padding: 12px;
+
+    width: 100%;
+
+    grid-column: 4 / span 8;
+
+    margin-bottom: var(--spacing);
+}
+
+
+/* Section formatting */
+section {
+    margin: 128px auto;
+    padding: 128px;
+
+    width: 100%;
+
+    background: var(--dark-bg);
+    margin-bottom: var(--spacing);
+}
+
+section.left {
+    grid-column: 2 / 5;
+}
+
+section.right {
+    grid-column: 7 / 10;
+}
+
