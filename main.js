@@ -117,7 +117,7 @@ console.log("Hello world!");
     // Load in skybox
     (async () => {
         const image = new Image();
-        image.src = "./skybox.png";
+        image.src = "./milky_way.jpg";
         image.onload = () => {
             const texture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, texture);
