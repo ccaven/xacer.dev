@@ -96,6 +96,24 @@ console.log("Hello world!");
 
     gl.uniform2f(locations.u_resolution, width, height);
 
+    function resize (s) {
+        width = window.innerWidth;
+        height = window.innerHeight;
+
+        if (width > s || height > s) {
+            let r = s / width;
+            if (width > height) r = s / height;
+            width *= r;
+            height *= r;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        gl.viewport(width, height);
+        gl.uniform2f(locations.u_resolution, width, height);
+    }
+
     // Load in skybox
     (async () => {
         const image = new Image();
@@ -158,7 +176,6 @@ console.log("Hello world!");
         viewMatrix: mat4.identity(mat4.create())
     };
 
-
     mat4.rotate(camera.viewMatrix, camera.viewMatrix, 0.5, [0, 0, 1]);
 
     camera.position[0] = 0;
@@ -171,11 +188,8 @@ console.log("Hello world!");
         mat4.fromRotation(camera.viewMatrix, Math.PI / 2 + r, [0, 1, 0]);
     }
 
-    document.body.onscroll = (e) => {
-        // Set position and view matrix
-        let anim = document.body.getBoundingClientRect().top;
-
-        orbitCamera(anim / 100.0);
+    function setCamera (anim) {
+        orbitCamera(anim / 300.0);
 
         // Send camera data to the shader
         gl.uniformMatrix4fv(locations.u_view, false, camera.viewMatrix);
@@ -192,21 +206,43 @@ console.log("Hello world!");
         }
 
         // Send animation time to the shader
-        gl.uniform1f(locations.u_time, time);
+        //gl.uniform1f(locations.u_time, time);
         gl.uniform1f(locations.u_anim, anim);
+
+        draw();
+    }
+
+    document.body.onscroll = (e) => {
+        // Set position and view matrix
+        let anim = document.body.getBoundingClientRect().top;
+        setCamera(anim);
+
     };
 
-    const startTime = Date.now();
-
+    let lastTime = Date.now();
+    let frameStreak = 0;
     function draw () {
+        let d = Date.now() - lastTime;
+        let fps = 1000 / d;
 
+        if (fps < 30) {
+            frameStreak ++;
+        } else {
+            frameStreak = 0;
+        }
+
+        if (frameStreak > 50) {
+            m -= 50;
+            resize(m);
+        }
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
 
         // Call the next frame
         setTimeout(() => requestAnimationFrame(draw), 1 / 60);
-
     }
+
+    setCamera(0);
 
     // Call the first frame
     requestAnimationFrame(draw);

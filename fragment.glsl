@@ -64,7 +64,7 @@ vec4 df (vec4 z, vec4 c) {
     return qdiv(f(z, c) - f(z + e, c), e);
 }
 
-float getDistanceIndividual (vec3 p) {
+float get_distance_individual (vec3 p) {
     const vec4 c = vec4(0.1, 0.5, -0.2, 0.0);
     vec4 z = vec4(p, 0.0);
     vec4 dz = vec4(1.0, 0.0, 0.0, 0.0);
@@ -78,7 +78,7 @@ float getDistanceIndividual (vec3 p) {
     return h - 0.001;
 }
 
-float getDistance (vec3 p) {
+float get_distance (vec3 p) {
     /*
     float md = 999.0;
 
@@ -90,34 +90,34 @@ float getDistance (vec3 p) {
 
         vec3 origin = vec3(cos(angle), 0, sin(angle)) * fr;
 
-        float ld = getDistanceIndividual(p - origin, id - 3 * (id / 3));
+        float ld = get_distance_individual(p - origin, id - 3 * (id / 3));
 
         md = min(md, ld);
     }
     return md;
     */
 
-    return getDistanceIndividual(p);
+    return get_distance_individual(p);
 }
 
 vec3 getColor (vec3 p) {
     return vec3(1, 1, 1);
 }
 
-vec3 getNormal (vec3 p) {
+vec3 get_normal (vec3 p) {
     const float h = 0.01;
     const vec2 k = vec2(1,-1);
     return normalize(
-        k.xyy * getDistance( p + k.xyy*h ) +
-        k.yyx * getDistance( p + k.yyx*h ) +
-        k.yxy * getDistance( p + k.yxy*h ) +
-        k.xxx * getDistance( p + k.xxx*h ) );
+        k.xyy * get_distance( p + k.xyy*h ) +
+        k.yyx * get_distance( p + k.yyx*h ) +
+        k.yxy * get_distance( p + k.yxy*h ) +
+        k.xxx * get_distance( p + k.xxx*h ) );
 }
 
 float raytrace (vec3 origin, vec3 direction, float minDistance, float maxDistance) {
     float totalDistance = 0.0;
     for (int i = 0; i < ITERATIONS; i ++) {
-        float localDistance = max(minDistance, getDistance(origin + direction * totalDistance));
+        float localDistance = max(minDistance, get_distance(origin + direction * totalDistance));
         totalDistance += localDistance;
         if (localDistance < EPSILON) {
             return totalDistance;
@@ -127,7 +127,6 @@ float raytrace (vec3 origin, vec3 direction, float minDistance, float maxDistanc
         }
     }
     return -1.0;
-
 }
 
 void main () {
@@ -154,7 +153,7 @@ void main () {
     vec3 hit = camera_position + camera_ray * d;
 
     vec3 color = getColor(hit);
-    vec3 normal = getNormal(hit);
+    vec3 normal = get_normal(hit);
 
     /*
 
