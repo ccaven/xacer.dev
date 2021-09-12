@@ -22,7 +22,7 @@ console.log("Hello world!");
     let width = window.innerWidth;
     let height = window.innerHeight;
 
-    let m = 750;
+    let m = 500;
 
     if (width > m || height > m) {
         let r = m / width;
@@ -110,7 +110,7 @@ console.log("Hello world!");
         canvas.width = width;
         canvas.height = height;
 
-        gl.viewport(width, height);
+        gl.viewport(0, 0, width, height);
         gl.uniform2f(locations.u_resolution, width, height);
     }
 
@@ -221,31 +221,32 @@ console.log("Hello world!");
 
     let lastTime = Date.now();
     let frameStreak = 0;
-    function draw () {
-        let d = Date.now() - lastTime;
-        let fps = 1000 / d;
 
-        if (fps < 30) {
+    if (window.lastAnimationFrameId) {
+        cancelAnimationFrame(window.lastAnimationFrameId);
+    }
+
+    function draw () {
+        let d = (Date.now() - lastTime) / 1000;
+        lastTime = Date.now();
+        if (d > 1 / 30) {
             frameStreak ++;
         } else {
             frameStreak = 0;
         }
 
-        if (frameStreak > 50) {
+        if (frameStreak > 1000 && m > 100) {
             m -= 50;
             resize(m);
+            frameStreak = 0;
         }
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-        // Call the next frame
-        setTimeout(() => requestAnimationFrame(draw), 1 / 60);
     }
 
-    setCamera(0);
+    window.lastAnimationFrameId = setInterval(requestAnimationFrame, 1000 / 30, draw);
 
-    // Call the first frame
-    requestAnimationFrame(draw);
+    setCamera(0);
 
 
 }) ();
