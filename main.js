@@ -208,8 +208,6 @@ console.log("Hello world!");
         // Send animation time to the shader
         //gl.uniform1f(locations.u_time, time);
         gl.uniform1f(locations.u_anim, anim);
-
-        draw();
     }
 
     document.body.onscroll = (e) => {
