@@ -1,10 +1,17 @@
-@import url("https://use.typekit.net/jmk3xov.css");
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Azeret+Mono&display=swap');
 
 :root {
     --dark-bg: rgba(15, 15, 15, 0.95);
     --spacing: 350px;
 
-    font-family: brandon-grotesque, sans-serif;
+    --blur-amt: 15px;
+    --blur-saturate: 200%;
+
+    --blur-border-radius: 50px;
+
+    --title-font: "Abril Fatface";
+    --content-font: "Azeret Mono";
 }
 
 body {
@@ -21,18 +28,20 @@ main {
 
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+
+    font-family: var(--content-font);
 }
 
 h1, h2, h3, blockquote {
-    font-family: 'elevon';
+    font-family: var(--title-font);
     grid-column: 2 / span 5;
 }
 
 .glass {
-    backdrop-filter: blur(25px) saturate(200%);
-    -webkit-backdrop-filter: blur(25px) saturate(200%);
+    backdrop-filter: blur(var(--blur-amt)) saturate(var(--blur-saturate));
+    -webkit-backdrop-filter: blur(var(--blur-amt)) saturate(var(--blur-saturate));
     /* background-color: rgba(255, 255, 255, 0.01); */
-    border-radius: 50px;
+    border-radius: var(--blur-border-radius);
     border: none;
 }
 

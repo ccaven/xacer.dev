@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Visualize</title>
+
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+    <div id="body-wrapper"> </div>
+
+    <header>
+        <p>xacer.dev data visualization</p>
+    </header>
+
+    <main>
+
+        <section class="content-section">
+            <h1>About</h1>
+            <p>
+                Use recursive fractals as icons for complex data sets.
+            </p>
+            <p>
+                Instructions:
+                <ol>
+                    <li>Upload a JSON file containing the data</li>
+                    <li>Select the output resolution</li>
+                    <li>Click "generate"</li>
+                    <li>Right click and save image</li>
+                </ol>
+            </p>
+        </section>
+
+        <section class="content-section">
+
+            <canvas id="output" style="float:right"></canvas>
+
+            <h1>Visualize</h1>
+
+            <p>
+                Input a JSON file: <input type="file" name="data-input" id="data-input">
+            </p>
+            <p>
+                Select file resolution(s):
+            </p>
+            <p>
+                <input type="checkbox" name="tiny" id="select-tiny"> Tiny
+            </p>
+            <p>
+                <input type="checkbox" name="medium" id="select-medium"> Medium
+            </p>
+            <p>
+                <input type="checkbox" name="tiny" id="select-large"> Large
+            </p>
+            <p>
+                Generate image: <button id="generate-button">Generate!</button>
+            </p>
+            <p>
+                Save image:
+                <button id="save-png">Save as PNG </button>
+                <button id="save-jpeg">Save as JPEG</button>
+                <button id="save-ico">Save as ICO</button>
+            </p>
+            <div style="clear: both;"></div>
+        </section>
+
+    </main>
+
+    <footer>
+
+        <p>Visit <a href="../../index.html">the main page</a>!</p>
+
+    </footer>
+
+</body>
+
+<script src="./main.js" type="module"></script>
+</html>

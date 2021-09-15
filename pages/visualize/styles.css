@@ -1,0 +1,90 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Azeret+Mono&display=swap');
+
+body {
+    background-image: url("./bg.png");
+    background-repeat: repeat;
+
+    margin: 0;
+    padding: 0;
+}
+
+#body-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    margin: 0;
+    padding: 0;
+
+    backdrop-filter: blur(5px);
+
+    z-index: -1;
+}
+
+h1, h2, h3 {
+    font-family: "Abril Fatface";
+    margin: 20px;
+}
+
+section {
+    background-color: white;
+}
+
+header, main, footer {
+    width: 80%;
+    margin: 20px auto;
+}
+
+header, section, footer {
+    border: 1px solid darkblue;
+}
+
+p, li {
+    font-family: "Azeret Mono";
+    margin: 20px;
+}
+
+canvas {
+    border: 1px solid black;
+    width: 400px;
+    height: 400px;
+    margin: 20px;
+}
+
+section {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: white;
+}
+
+
+header, footer {
+    background-color: aliceblue;
+}
+
+header p {
+    text-align: center;
+    padding: 20px;
+    margin: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+footer p {
+    text-align: center;
+}
+
+button {
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: 1.5rem;
+}
