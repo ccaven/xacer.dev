@@ -49,13 +49,15 @@ vec4 qsqrt (vec4 a) {
 }
 
 vec4 f (vec4 z, vec4 c) {
+
+    // TODO: change to 512
     const int iters = 32;
 
-    vec4 l = qln(z);
     for (int i = 0; i < iters; i += 4) {
-        vec4 offset = vec4(u_input[i], u_input[i + 1], u_input[i + 2], u_input[i + 3]) + vec4(2, 0, 0, 0);
+        vec4 offset = vec4(u_input[i], u_input[i + 1], u_input[i + 2], u_input[i + 3]) +
+            vec4(2, 0, 0, 0);
+
         z += qpow(offset, z) / float(iters);
-        z -= c / float(iters);
     }
 
     return qsqr(z) + c;
@@ -67,7 +69,7 @@ vec4 df (vec4 z, vec4 c) {
 }
 
 float de (vec3 p) {
-    const vec4 c = vec4(0.1, 0.5, -0.2, 0.0);
+    const vec4 c = vec4(0.5, 0.7, -0.2, 0.0);
     vec4 z = vec4(p, 0.0);
     vec4 dz = vec4(1.0, 0.0, 0.0, 0.0);
 
