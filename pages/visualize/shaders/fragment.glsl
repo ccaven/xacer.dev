@@ -5,8 +5,7 @@ uniform vec2 u_resolution;
 uniform vec3 u_camera;
 uniform mat4 u_view;
 
-
-uniform sampler2D u_skybox;
+uniform float u_input[512];
 
 #define PI 3.1415926353
 #define ITERATIONS 1000
@@ -39,6 +38,9 @@ vec4 qln (vec4 a) {
 vec4 qpow (vec4 a, float p) {
     return qexp(p*qln(a));
 }
+vec4 qpow (vec4 a, vec4 b) {
+    return qexp(qmul(b, qln(a)));
+}
 vec4 qsqr (vec4 a) {
     return qmul(a, a);
 }
@@ -47,8 +49,18 @@ vec4 qsqrt (vec4 a) {
 }
 
 vec4 f (vec4 z, vec4 c) {
-    return qpow(z, 4.0) - 1.0 * qsqr(z) - qmul(z, c) - c;
+    const int iters = 32;
+
+    vec4 l = qln(z);
+    for (int i = 0; i < iters; i += 4) {
+        vec4 offset = vec4(u_input[i], u_input[i + 1], u_input[i + 2], u_input[i + 3]) + vec4(2, 0, 0, 0);
+        z += qpow(offset, z) / float(iters);
+        z -= c / float(iters);
+    }
+
+    return qsqr(z) + c;
 }
+
 vec4 df (vec4 z, vec4 c) {
     vec4 e = vec4(0.01, 0.0, 0.0, 0.0);
     return qdiv(f(z, c) - f(z + e, c), e);
@@ -64,8 +76,14 @@ float de (vec3 p) {
         dz = qmul(dz, df(z, c));
         z = f(z, c);
     }
+
     float h = 0.0125 * log(dot(z, z)) * sqrt(dot(z, z) / dot(dz, dz));
-    return h - 0.001;
+
+    float d2 = length(p) - 1.0;
+
+    float k = 0.01;
+
+    return h + min(d2 - h, 0.0) * k;
 }
 
 vec3 de_normal (vec3 p) {

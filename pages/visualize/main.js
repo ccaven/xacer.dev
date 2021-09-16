@@ -49,6 +49,58 @@ const resolutionSizes = [
     [ 100, 100]
 ];
 
+let shaderInputs;
+
+fileInput.addEventListener("change", (event) => {
+    const files = fileInput.files;
+
+    if (!files.length) return;
+
+    const file = files[0];
+
+    if (!file.type.startsWith("application/json")) {
+        alert("Please enter a JSON file!");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        const json = JSON.parse(reader.result);
+
+        const voiceprint = json.voiceprint;
+
+        if (!voiceprint) {
+            alert("Your JSON file didn't have a `voiceprint` property!");
+        }
+
+        console.log(voiceprint.length);
+
+        let inx = 1;
+
+        let min = Math.min(...voiceprint[inx]);
+        let max = Math.max(...voiceprint[inx]);
+
+        shaderInputs = voiceprint[inx].map(v => (v - min) / (max - min) * 2 - 1);
+
+        /*
+        shaderInputs = json.L.map(f => parseFloat(f.N)*10.0);
+
+        let min = Math.min(...shaderInputs);
+        let max = Math.max(...shaderInputs);
+
+        shaderInputs = shaderInputs.map(v => (v - min) / (max - min) * 2 - 1);
+
+        console.log(shaderInputs);
+        */
+
+    };
+
+    reader.readAsText(files[0]);
+
+    console.log(`There are ${files.length} files.`);
+});
+
 (async () => {
     if (!gl) {
         alert("Your browser does not support WebGL!\nPlease update your browser, use a different one, or try a different computer.");
@@ -128,7 +180,17 @@ const resolutionSizes = [
 
     orbitCamera(Math.PI / 4);
 
-    generateButton.onclick = (e) => {
+    generateButton.onclick = async (_) => {
+
+        if (!shaderInputs) {
+            alert("You need to enter a JSON file before making the image.");
+            return;
+        }
+
+        for (let i = 0; i < shaderInputs.length; i ++) {
+            const loc = gl.getUniformLocation(program, `u_input[${i}]`);
+            gl.uniform1f(loc, shaderInputs[i]);
+        }
 
         gl.uniform3fv(locations.u_camera, camera.position);
         gl.uniformMatrix4fv(locations.u_view, false, camera.viewMatrix);
