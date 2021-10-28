@@ -51,6 +51,21 @@ const resolutionSizes = [
 
 let shaderInputs;
 
+function calculatePercentile (value) {
+    let sigma = 1;
+    let z = value / Math.sqrt(2) / sigma;
+    let t = 1 / (1 + 0.3275911 * Math.abs(z));
+    let a1 =  0.254829592;
+    let a2 = -0.284496736;
+    let a3 =  1.421413741;
+    let a4 = -1.453152027;
+    let a5 =  1.061405429;
+    let erf = 1-(((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-z*z);
+    let sign = 1;
+    if(z < 0) sign = -1;
+    return (1/2)*(1+sign*erf);
+}
+
 fileInput.addEventListener("change", (event) => {
     const files = fileInput.files;
 
@@ -76,24 +91,7 @@ fileInput.addEventListener("change", (event) => {
 
         console.log(voiceprint.length);
 
-        let inx = 1;
-
-        let min = Math.min(...voiceprint[inx]);
-        let max = Math.max(...voiceprint[inx]);
-
-        shaderInputs = voiceprint[inx].map(v => (v - min) / (max - min) * 2 - 1);
-
-        /*
-        shaderInputs = json.L.map(f => parseFloat(f.N)*10.0);
-
-        let min = Math.min(...shaderInputs);
-        let max = Math.max(...shaderInputs);
-
-        shaderInputs = shaderInputs.map(v => (v - min) / (max - min) * 2 - 1);
-
-        console.log(shaderInputs);
-        */
-
+        shaderInputs = voiceprint[0].map(calculatePercentile);
     };
 
     reader.readAsText(files[0]);
@@ -111,7 +109,7 @@ fileInput.addEventListener("change", (event) => {
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     const vertexSource = await fetch("./shaders/vertex.glsl").then(r => r.text());
-    const fragmentSource = await fetch("./shaders/fragment.glsl").then(r => r.text());
+    const fragmentSource = await fetch("./shaders/fragment3.glsl").then(r => r.text());
 
     const vertexShader = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertexShader, vertexSource);
@@ -172,25 +170,63 @@ fileInput.addEventListener("change", (event) => {
     };
 
     function orbitCamera (r) {
-        camera.position[0] = Math.cos(r) * 2.5;
-        camera.position[2] = Math.sin(r) * 2.5;
 
-        mat4.fromRotation(camera.viewMatrix, Math.PI / 2 + r, [0, 1, 0]);
+        /*
+        camera.position[0] = Math.cos(r) * 2.4;
+        camera.position[1] = 0.5;
+        camera.position[2] = Math.sin(r) * 2.4;
+
+        mat4.fromRotation(
+            mat4.fromRotation(camera.viewMatrix, Math.PI / 4, [1, 0, 0]), Math.PI / 2 + r, [0, 1, 0]);
+        */
+
+        camera.position[1] = 2;
+        camera.position[2] = -3;
     }
 
-    orbitCamera(Math.PI / 4);
+
+    /*
+    camera.position[0] = 0;
+    camera.position[1] = 1;
+    camera.position[2] = -5;
+    */
 
     generateButton.onclick = async (_) => {
 
+
+        orbitCamera(Math.random() * Math.PI * 2);
+
+        /*
         if (!shaderInputs) {
             alert("You need to enter a JSON file before making the image.");
             return;
         }
 
-        for (let i = 0; i < shaderInputs.length; i ++) {
-            const loc = gl.getUniformLocation(program, `u_input[${i}]`);
-            gl.uniform1f(loc, shaderInputs[i]);
+        for (let i = 0; i < 64; i ++) {
+            const n = [
+                shaderInputs[i * 8 + 0] * 2 - 1,
+                shaderInputs[i * 8 + 1] * 2 - 1,
+                shaderInputs[i * 8 + 2] * 2 - 1,
+                shaderInputs[i * 8 + 3] * 0.1,
+            ];
+
+            const n_loc = gl.getUniformLocation(program, `u_normals[${i}]`);
+            gl.uniform4fv(n_loc, n);
+
+            const r = [
+                shaderInputs[i * 8 + 4] * 2 - 1,
+                shaderInputs[i * 8 + 5] * 2 - 1,
+                shaderInputs[i * 8 + 6] * 2 - 1,
+                shaderInputs[i * 8 + 7] * 2 - 1,
+            ];
+
+            const rl = Math.hypot(...r);
+
+            const r_loc = gl.getUniformLocation(program, `u_rotations[${i}]`);
+
+            gl.uniform4fv(r_loc, r.map(v => v / rl));
         }
+        */
 
         gl.uniform3fv(locations.u_camera, camera.position);
         gl.uniformMatrix4fv(locations.u_view, false, camera.viewMatrix);
