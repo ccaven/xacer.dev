@@ -3,9 +3,7 @@
 
 const doc = window.top.document;
 
-const textArea = doc.querySelector("textarea[dir=\"ltr\"]");
-
-textArea.textContent = "Hello World";
+console.log(doc);
 
 /*
 const message = "Hello Mrs. Rakestraw. I have found a strange vulnerability in FLVS's student submission system.";
