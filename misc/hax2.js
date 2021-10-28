@@ -1,13 +1,11 @@
 const doc = window.top.document;
 
-const td = doc.querySelector('textarea[dir=\'ltr\']').parentElement;
+const form = doc.getElementById('assignment');
 
-const toRemove = td.querySelectorAll('textarea');
+while (form.lastChild) form.remove(form.lastChild);
 
-for (let elementToRemove of toRemove) {
+const p = doc.createElement('p');
 
-    td.removeChild(elementToRemove);
+p.textContent = 'Test message';
 
-}
-
-console.log(doc);
+form.appendChild(p);
