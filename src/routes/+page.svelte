@@ -1,44 +1,34 @@
 <script lang="ts">
 
-    import Card from "../components/card.svelte";
+    let items = [
+        "This is item 1",
+        "This is item 2",
+        "This is item 3",
+        "This is item 4"
+    ];
 
 </script>
 
-<div class="grid-container">
-    {#each Array(39).fill(0).map((_, i) => i) as id}
-        <Card id={id}/>
-    {/each}
+<div class="max-w-3xl w-full  mx-auto"> 
+
+    <div class="w-full border-2 m-6">
+
+        <h1 class="font-light text-center p-11 text-5xl">Hello</h1>
+
+    </div>
+
+    <div class="w-full p-2 border-2 m-6">
+
+        {#each items as item}
+
+            <div class="border-2 m-6">
+                <p class="p-6">
+                    {item}
+                </p>
+            </div>
+
+        {/each}
+
+    </div>
+
 </div>
-
-<style>
-
-    :global(body) {
-        padding-top: 0;
-        margin: 0;
-    }
-
-    .grid-container {
-        display: grid;
-        /*grid-template-rows: repeat(3, 1fr);*/
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1em;
-        padding: 2em;
-        max-width: 1080px;
-        margin: auto;
-    }
-
-    .grid-container > div {
-        border: 1px solid black;
-        padding: 1rem;
-        display: flex;
-        justify-content: center;
-        /*height: 100px;*/
-        aspect-ratio: 1 / 1;
-        border-radius: 1em;
-    }
-
-    .grid-container > div > p {
-        place-self: center;
-    }
-
-</style>
